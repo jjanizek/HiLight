@@ -28,31 +28,29 @@ class ViewController: NSViewController {
     var timer = Timer()
     var alternating: Double = 0.0
     var currentFrame: Int32 = 0
-    var encodedMessage: [UInt8]!
+    var encodedMessage: [UInt8] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let string = "Oh hello there this might take a while"
-        
-        let byteArray = BFSKEncoding(message: string)
+        let string = "Oh hello there, what's going on, I'm toby"
         
         self.encodedMessage = BFSKEncoding(message: string)
-        
-        print(byteArray.count)
-
+ 
         // Do any additional setup after loading the view.
         let image: NSImage = NSImage(named: "IMG_3933")!
         bgImage = NSImageView(image: image)
-        bgImage!.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        bgImage!.frame = CGRect(x: 0, y: 0, width: self.view.frame.width*3, height: self.view.frame.height*3)
         self.view.addSubview(bgImage!)
-        
+        self.view.wantsLayer = true
+        self.view.layer?.backgroundColor = NSColor.black.cgColor
+                
         scheduledTimerWithTimeInterval()
     }
     
     func scheduledTimerWithTimeInterval(){
         // Scheduling timer to Call the function "updateCounting" with the interval of 1 seconds
-        timer = Timer.scheduledTimer(timeInterval: 1.0/60.0, target: self, selector: #selector(flickerAlpha), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0/30.0, target: self, selector: #selector(flickerAlpha), userInfo: nil, repeats: true)
     }
     
     func BFSKEncoding(message: String) -> [UInt8] {
@@ -62,22 +60,24 @@ class ViewController: NSViewController {
         
         for char in startChar.utf8{
             for bit in char.binaryString {
+                print(bit)
                 if bit == "1" {
-                    BFSKEncoded.append(contentsOf: [1, 0, 1, 0, 1, 0])
+                    BFSKEncoded.append(contentsOf: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0])
                 }
                 else {
-                    BFSKEncoded.append(contentsOf: [1, 0, 0, 1, 0, 0])
+                    BFSKEncoded.append(contentsOf: [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1])
                 }
             }
         }
-        
+                
         for char in message.utf8{
             for bit in char.binaryString {
+                print(bit)
                 if bit == "1" {
-                    BFSKEncoded.append(contentsOf: [1, 0, 1, 0, 1, 0])
+                    BFSKEncoded.append(contentsOf: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0])
                 }
                 else {
-                    BFSKEncoded.append(contentsOf: [1, 0, 0, 1, 0, 0])
+                    BFSKEncoded.append(contentsOf: [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1])
                 }
             }
         }
@@ -96,12 +96,14 @@ class ViewController: NSViewController {
     }
     
     @objc func flickerAlpha(){
-        let currentBit: UInt8 = self.encodedMessage![Int(self.currentFrame)]
+        let currentBit: UInt8 = self.encodedMessage[Int(self.currentFrame)]
         if currentBit == 0 {
-            self.bgImage?.alphaValue = 0.4
+            self.bgImage?.alphaValue = 0.5
+//            print(0)
         }
         else {
             self.bgImage?.alphaValue = 1.0
+//            print(1)
         }
         
         self.currentFrame += 1
