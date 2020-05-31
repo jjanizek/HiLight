@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     var frameExtractor: FrameExtractor!
+    @IBOutlet weak var mainLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()

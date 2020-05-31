@@ -33,7 +33,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let string = "Oh hello there, what's going on, I'm toby"
+        let string = "Here is the message that I'm sending"
         
         self.encodedMessage = BFSKEncoding(message: string)
  
@@ -60,7 +60,6 @@ class ViewController: NSViewController {
         
         for char in startChar.utf8{
             for bit in char.binaryString {
-                print(bit)
                 if bit == "1" {
                     BFSKEncoded.append(contentsOf: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0])
                 }
@@ -72,7 +71,6 @@ class ViewController: NSViewController {
                 
         for char in message.utf8{
             for bit in char.binaryString {
-                print(bit)
                 if bit == "1" {
                     BFSKEncoded.append(contentsOf: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0])
                 }
@@ -121,4 +119,3 @@ class ViewController: NSViewController {
 
 
 }
-
